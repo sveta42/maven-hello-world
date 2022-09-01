@@ -22,6 +22,5 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Change Directory
-      run: cd /home/runner/work/maven-hello-world/maven-hello-world/my-app/
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package --file ./my-app/pom.xml
