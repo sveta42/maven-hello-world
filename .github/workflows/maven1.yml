@@ -36,7 +36,7 @@ jobs:
     - name: Push Commit
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.HUB_TOKEN }}
+        github_token: ${{ secrets.GH }}
         branch: ${{ github.ref }}
         force_with_lease: true
   
