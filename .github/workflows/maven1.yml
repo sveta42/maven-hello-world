@@ -35,8 +35,8 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USR }}
         password: ${{ secrets.DOCKERHUB_PASSWD }}
                 
-#     - name: Build and push
-#       uses: docker/build-push-action@v3
-#       with:
-#           push: true
-#           tags: sveta296/app:latest
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+           push: true
+           tags: sveta296/app:latest
