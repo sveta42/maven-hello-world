@@ -51,7 +51,7 @@ jobs:
       env:
           version: $(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file ./my-app/pom.xml)
       run: |
-         docker build -t sveta296/java:${{ env.version }} -f my-app/Dockerfile .
+         docker build -t sveta296/java:${{ env.version }} --build-arg version=${{ env.version }} -f my-app/Dockerfile .
          docker push sveta296/java:${{ env.version }}
 
 #    - name: Setup Docker Buildx
