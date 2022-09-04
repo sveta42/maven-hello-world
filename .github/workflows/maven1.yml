@@ -38,5 +38,6 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
+           file: my-app/Dockerfile
            push: true
            tags: sveta296/app:latest
