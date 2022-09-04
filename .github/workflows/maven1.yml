@@ -18,14 +18,42 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 8
-    - name: Set POM Build Version
-      run: mvn versions:set -DnewVersion=1.0.0 --file ./my-app/pom.xml
+    - name: Update POM Version
+      run: mvn validate -DbumpPatch --file ./my-app/pom.xml
       
     - name: Build with Maven
       run: mvn -B package --file ./my-app/pom.xml
     - name: tree view
       run: tree
       
+    - name: Commit files
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add my-app/pom.xml
+        git commit -m "Updated Version" -a    
+        
+    - name: Push Commit
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.HUB_TOKEN }}
+        branch: ${{ github.ref }}
+        force_with_lease: true
+  
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USR }}
+        password: ${{ secrets.DOCKERHUB_PASSWD }}
+      
+      
+#     - name: Fetch Version & Build Image
+#       env:
+#          version: $(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file ./my-app/pom.xml)
+#       run: |
+#         docker build -t sveta296/java:${{ env.version }} -f my-app/Dockerfile .
+#         docker push davideden/java:${{ env.version }}
+
     - name: Setup Docker Buildx
       uses: docker/setup-buildx-action@v1
     - name: Login to DockerHub
@@ -39,4 +67,4 @@ jobs:
       with:
            file: my-app/Dockerfile
            push: true
-           tags: sveta296/app:latest
+           tags: sveta296/app:${{ env.version }}
