@@ -1,4 +1,4 @@
 FROM openjdk:11-slim
-WORKDIR /java
+WORKDIR /my-app
 COPY my-app/target/*.jar ./application.jar
-CMD ["java", "-jar", "application.jar]
+CMD ["my-app", "-jar", "application.jar]
